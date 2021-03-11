@@ -31,10 +31,12 @@ def scrape():
     headlines = soup.find_all('div', class_='content_title')
     #store first head line as news_title
     news_title = headlines[0].text.strip()
+    print(news_title)
     #find first paragraph
     teaser = soup.find_all('div', class_="rollover_description_inner")
     #store paragraph as news_p
     news_p = teaser[0].text.strip()
+    print(news_p)
      
 
     # jpl image
@@ -50,7 +52,7 @@ def scrape():
     soup = BeautifulSoup(html, 'html.parser')
     image = soup.find('a', class_="showimg")['href']
     featured_image_url = 'https://data-class-jpl-space.s3.amazonaws.com/JPL_Space/' + image
-    browser.quit() 
+  
 
     # mars facts
     #scrape table from https://space-facts.com/mars/
@@ -63,7 +65,7 @@ def scrape():
     html_table = df.to_html(index=False, header=False)  
 
     # mars hemispheres
-    browser = init_browser()
+
     # set up urls 
     # this url is the base to use to find both the name and image info
     base_url = 'https://astrogeology.usgs.gov'
@@ -125,7 +127,7 @@ def scrape():
     for x in range(len(img_url)):
         # for x combine the key value pair with comprehension and add the h_i_u list
         hemisphere_image_urls.append({'title':titles[x], 'img_url': img_url[x]})
-
+    print(hemisphere_image_urls)
 
 
     mars_dict = {
