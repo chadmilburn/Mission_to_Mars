@@ -7,6 +7,7 @@ from splinter import Browser
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 import pymongo
+from time import sleep
 
 # create browser function to call as needed with scraping
 def init_browser():
@@ -93,8 +94,7 @@ def scrape():
     for name in names:
         title_url.append(base_url + (name.find('a')['href']))
 
-    # check the above route to url
-    browser.visit(title_url[0])
+
 
     # Retrieve html
     html = browser.html
@@ -102,7 +102,7 @@ def scrape():
     soup = BeautifulSoup(html, 'html.parser')
 
     # check info scrape
-    img_sub_url = soup.find('img', class_='wide-image')['src']
+    #img_sub_url = soup.find('img', class_='wide-image')['src']
 
     #loop to pull all full size image urls
     img_url = []
@@ -110,8 +110,9 @@ def scrape():
     for h_url in title_url:
         #open browser for each url
         browser.visit(h_url)
+        sleep(1)
         # Create BeautifulSoup object; parse with 'html.parser'
-        soup = BeautifulSoup(html, 'html.parser')
+        soup = BeautifulSoup(browser.html, 'html.parser')
         # create new url for list
         image_url = base_url + soup.find('img', class_='wide-image')['src']
         # add url to list for dict 
